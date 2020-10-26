@@ -53,21 +53,51 @@ router.post('/add', (req, res, next) => {
 });
 });
 
-// GET the Book Details page in order to edit an existing Book
-router.get('/:id', (req, res, next) => {
-
-    /*****************
-     * ADD CODE HERE *
-     *****************/
+// GET the Book edit 
+//changed the route so it would point to the correct file
+router.get('/edit/:id', (req, res, next) => {
+  //the logic to reference the entry we want
+  let id = req.params.id;
+  //retreive the data and store in var called "bookToEdit"
+  book.findById(id, (err, bookToEdit) => {
+    if(err)
+    {
+        console.log(err);
+        res.end(err);
+    }
+    else
+    {
+        //show the edit view
+        res.render('books/edit', {title: 'Edit Book', books: bookToEdit})
+    }
+});
 });
 
 // POST - process the information passed from the details form and update the document
-router.post('/:id', (req, res, next) => {
-
-    /*****************
-     * ADD CODE HERE *
-     *****************/
-
+router.post('/edit/:id', (req, res, next) => {
+  let id = req.params.id
+//create a variable according to model for data from post
+  let updatedBook = book({
+    "_id": id, //important and immutable
+    "Title": req.body.Title,
+    "Description": req.body.Description,
+    "Price": req.body.Price,
+    "Author": req.body.Author,
+    "Genre": req.body.Genre
+  });
+  //this is the function that makes the alteration
+  book.updateOne({_id: id}, updatedBook, (err) => {
+      if(err)
+      {
+          console.log(err);
+          res.end(err);
+      }
+      else
+      {
+          // refresh the book list
+          res.redirect('/books');
+      }
+  });
 });
 
 // GET - process the delete by user id
