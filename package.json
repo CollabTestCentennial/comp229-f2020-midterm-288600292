@@ -45,14 +45,14 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/skamino/comp229-f2020-midterm-288600292"
   },
   "keywords": [
     "NodeJS",
     "ExpressJS",
     "EJS"
   ],
-  "author": "Your Name Goes Here",
+  "author": "Stephen Kamino",
   "license": "ISC",
   "bugs": {
     "url": ""
